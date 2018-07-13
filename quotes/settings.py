@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-BOT_NAME = 'books'
+BOT_NAME = 'quotes'
 
 SPIDER_MODULES = ['quotes.spiders']
 NEWSPIDER_MODULE = 'quotes.spiders'
