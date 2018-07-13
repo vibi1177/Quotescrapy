@@ -11,8 +11,8 @@ class QuotesSpider(scrapy.Spider):
         for quote in response.css('div.quote'):
             yield {
                 'text': quote.css('span.text::text').extract_first(),
-                'author': quote.xpath('span/small/text()').extract(),
-                'tag': quote.css('a.tag::text').extract_first(),
+                'author': quote.xpath('span/small/text()').extract_first(),
+                'tag': quote.css('a.tag::text').extract(),
             }
 
         next_page = response.css('li.next a::attr("href")').extract_first()
