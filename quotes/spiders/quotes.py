@@ -9,7 +9,7 @@ class QuotesSpider(scrapy.Spider):
     
     def parse(self, response):
         for quote in response.css('div.quote'):
-            yield  scrapy.Request(quote, callback=self.parse_attr),
+            yield  scrapy.Request(quote, callback=self.parse_attr)
         next_page = response.css('li.next a::attr("href")').extract_first()
         if next_page is not None:
             yield response.follow(next_page, self.parse)
