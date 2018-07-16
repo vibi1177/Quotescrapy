@@ -6,8 +6,6 @@ class QuotesSpider(scrapy.Spider):
     start_urls = [
         'http://quotes.toscrape.com/tag/humor/',
     ]
-
-    BASE_URL = 'http://quotes.toscrape.com/'
     
     def parse(self, response):
         for quote in response.css('div.quote'):
@@ -18,11 +16,12 @@ class QuotesSpider(scrapy.Spider):
             
    def parse_attr(self, response):
         item = QuotesItem()
-            links = response.xpath('span/a/@href').extract()
-            for link in links:
-                absolute_url = self.BASE_URL + link
-                item["text"] = response.css('span.text::text').extract_first(),
-                item["author"] = response.xpath('span/small/text()').extract_first(),
-                item["tag"] = response.css('a.tag::text').extract(),
-                item["born"] = response.css('span.author-born-location::text').extract_first()
+        links = response.xpath('span/a/@href').extract()
+        BASE_URL = 'http://quotes.toscrape.com/'
+        for link in links:
+            absolute_url = self.BASE_URL + link
+            item["text"] = response.css('span.text::text').extract_first(),
+            item["author"] = response.xpath('span/small/text()').extract_first(),
+            item["tag"] = response.css('a.tag::text').extract(),
+            item["born"] = response.css('span.author-born-location::text').extract_first()
         yield item
