@@ -9,11 +9,11 @@ class QuotesSpider(scrapy.Spider):
     
     def parse(self, response):
         for quote in response.css('div.quote'):
-            link = response.xpath('span/a/@href').extract_first()
+            link = quote.xpath('span/a/@href').extract_first()
             yield scrapy.Request(response.urljoin(link), callback=self.parse_attr)
         next_page = response.css('li.next a::attr("href")').extract_first()
-        if next_page is not None:
-            yield response.follow(next_page, self.parse)
+        if next_page:
+            yield scrapy.Request(response.urljoin(next_page), callback=self.parse)
             
    def parse_attr(self, response):
         item = QuotesItem()
