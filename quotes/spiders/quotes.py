@@ -20,8 +20,8 @@ class QuotesSpider(scrapy.Spider):
         BASE_URL = 'http://quotes.toscrape.com/'
         for link in links:
             absolute_url = self.BASE_URL + link
-            item["text"] = response.css('span.text::text').extract_first(),
-            item["author"] = response.xpath('span/small/text()').extract_first(),
-            item["tag"] = response.css('a.tag::text').extract(),
+            item["text"] = response.css('span.text::text').extract_first()
+            item["author"] = response.xpath('span/small/text()').extract_first()
+            item["tag"] = response.css('a.tag::text').extract()
             item["born"] = response.css('span.author-born-location::text').extract_first()
         yield item
