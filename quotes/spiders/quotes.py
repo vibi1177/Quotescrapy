@@ -16,7 +16,8 @@ class QuotesSpider(scrapy.Spider):
         if next_page:
             yield scrapy.Request(response.urljoin(next_page), callback=self.parse)
             
-   def parse_attr_quote(self, response):
+            
+    def parse_attr_quote(self, response):
         item = {}
         item["text"] = response.css("span.text::text").extract_first()
         item["author"] = response.xpath("span/small/text()").extract_first()
