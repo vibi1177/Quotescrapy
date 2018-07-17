@@ -9,18 +9,13 @@ class QuotesSpider(scrapy.Spider):
     ]
     
     def parse(self, response):
-        for quote in response.css('div.quote'):
-            link = quote.xpath('span/a/@href').extract_first()
-            yield scrapy.Request(response.urljoin(link), callback=self.parse_attr_quote)
-        next_page = response.css("li.next a::attr(href)").extract_first()
-        if next_page:
-            yield scrapy.Request(response.urljoin(next_page), callback=self.parse)
-            
-            
-    def parse_attr_quote(self, response):
-        item = {}
-        item["text"] = response.css("span.text::text").extract_first()
-        item["author"] = response.xpath("span/small/text()").extract_first()
-        item["tag"] = response.css("a.tag::text").extract()
-        item["born"] = response.css("span.author-born-location::text").extract_first()
-        yield item
+        for quote in response.xpath('//div[@class="quote"]'):
+            yield {
+                'text': quote.xpath('./span[@class="text"]/text()').extract_first(),
+                'author': quote.xpath('.//small[@class="author"]/text()').extract_first(),
+                'tags': quote.xpath('.//div[@class="tags"]/a[@class="tag"]/text()').extract()
+            }
+
+        next_page_url = response.xpath('//li[@class="next"]/a/@href').extract_first()
+        if next_page_url is not None:
+            yield scrapy.Request(response.urljoin(next_page_url))
