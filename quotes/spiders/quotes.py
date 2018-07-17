@@ -11,7 +11,7 @@ class QuotesSpider(scrapy.Spider):
         for quote in response.css('div.quote'):
             link = quote.xpath('span/a/@href').extract_first()
             yield scrapy.Request(response.urljoin(link), callback=self.parse_attr_quote)
-        next_page = response.css('li.next a::attr("href")').extract_first()
+        next_page = response.css("li.next a::attr(href)").extract_first()
         if next_page:
             yield scrapy.Request(response.urljoin(next_page), callback=self.parse)
             
