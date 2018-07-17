@@ -20,6 +20,6 @@ class QuotesSpiderDetail(scrapy.Spider):
     def parse_attr_quote(self, response):
         item = {}
         item["text"] = response.css("h3.author-title::text").extract_first()
-        item["description"] = response.css("p.author-description::text").extract_first()
-        item["born"] = response.css("span.author-born-location::text").extract_first()
+        item["description"] = response.css("div.author-description::text").extract_first()
+        item["born"] = response.css("span.author-born-date::text").extract_first() + " " + response.css("span.author-born-location::text").extract_first()
         yield item
