@@ -17,8 +17,8 @@ class QuotesSpider(scrapy.Spider):
             
    def parse_attr_quote(self, response):
         item = {}
-        item["text"] = response.css('span.text::text').extract_first()
-        item["author"] = response.xpath('span/small/text()').extract_first()
-        item["tag"] = response.css('a.tag::text').extract()
-        item["born"] = response.css('span.author-born-location::text').extract_first()
+        item["text"] = response.css("span.text::text").extract_first()
+        item["author"] = response.xpath("span/small/text()").extract_first()
+        item["tag"] = response.css("a.tag::text").extract()
+        item["born"] = response.css("span.author-born-location::text").extract_first()
         yield item
