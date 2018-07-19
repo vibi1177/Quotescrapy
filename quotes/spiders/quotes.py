@@ -5,7 +5,7 @@ import scrapy
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        'http://quotes.toscrape.com/',
+        'http://demo174893.istitutidibellezza.it/',
     ]
     
     def parse(self, response):
